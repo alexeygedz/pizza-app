@@ -14,12 +14,11 @@ export function Menu() {
 
 	const getMenu = async () => {
 		try {
-			setIsLoading(true); 
+			setIsLoading(true);
 			const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
 			setProducts(data);
 			setIsLoading(false);
-		}
-		catch(e) {
+		} catch (e) {
 			console.error(e);
 			if (e instanceof AxiosError) {
 				setError(e.message);
@@ -32,18 +31,18 @@ export function Menu() {
 	useEffect(() => {
 		getMenu();
 	}, []);
-	
+
 	return <>
 		<div className={styles['head']}>
 			<Headling>Меню</Headling>
-			<Search placeholder='Введите блюдо или состав'/>
+			<Search placeholder='Введите блюдо или состав' />
 		</div>
 		<div>
 			{error && <>{error}</>}
-			{!isLoading && <MenuList products={products}/>}
+			{!isLoading && <MenuList products={products} />}
 			{isLoading && <>Загружаем продукты...</>}
 		</div>
 	</>;
 }
 
-export default Menu; 
+export default Menu;
