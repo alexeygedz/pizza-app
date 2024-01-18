@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispath, RootState } from '../../store/store';
 import { register, userActions } from '../../store/user.slice';
 
-
 export type RegisterForm = {
 	email: {
 		value: string;
@@ -59,7 +58,7 @@ export function Register() {
 			<Button appearence="big">Зарегистрироваться</Button>
 		</form>
 		<div className={styles['links']}>
-			<div>Есть акканута?</div>
+			<div>Есть акканут?</div>
 			<Link to="/auth/login">Войти</Link>
 		</div>
 	</div>;

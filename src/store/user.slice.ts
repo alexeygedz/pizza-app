@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loadState } from './storage';
+import { LoginResponse } from '../interfaces/auth.interface';
 import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../helpers/API';
-import { LoginResponse } from '../interfaces/auth.interface';
-import { Profile } from '../interfaces/user.intarface';
+import { Profile } from '../interfaces/user.interface';
 import { RootState } from './store';
 
 export const JWT_PERSISTENT_STATE = 'userData';
@@ -15,7 +15,7 @@ export interface UserPersistentState {
 export interface UserState {
 	jwt: string | null;
 	loginErrorMessage?: string;
-	registerErrorMessage?: string; 
+	registerErrorMessage?: string;
 	profile?: Profile;
 }
 
@@ -56,7 +56,7 @@ export const register = createAsyncThunk('user/register',
 	}
 );
 
-export const getProfile = createAsyncThunk<Profile, void, { state: RootState}>('user/getProfile',
+export const getProfile = createAsyncThunk<Profile, void, { state: RootState }>('user/getProfile',
 	async (_, thunkApi) => {
 		const jwt = thunkApi.getState().user.jwt;
 		const { data } = await axios.get<Profile>(`${PREFIX}/user/profile`, {
@@ -87,7 +87,7 @@ export const userSlice = createSlice({
 			if (!action.payload) {
 				return;
 			}
-			state.jwt = action.payload.access_token;  
+			state.jwt = action.payload.access_token;
 		});
 		builder.addCase(login.rejected, (state, action) => {
 			state.loginErrorMessage = action.error.message;
@@ -101,7 +101,7 @@ export const userSlice = createSlice({
 			if (!action.payload) {
 				return;
 			}
-			state.jwt = action.payload.access_token;  
+			state.jwt = action.payload.access_token;
 		});
 		builder.addCase(register.rejected, (state, action) => {
 			state.registerErrorMessage = action.error.message;
@@ -110,4 +110,4 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const userActions = userSlice.actions;  
+export const userActions = userSlice.actions;
